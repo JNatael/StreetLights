@@ -56,18 +56,16 @@ int main() {
         vector<bool> lightable(l); //Initialize a lightable vector to track possibility
 
         vector<int> light_locations;
-        // Iterate over inputs
-        for (int j = 0; j < n; j++) {
-            light_locations = readlineofints(n);
-            //For each light
-            for (auto light : light_locations) {
-                //Calculate cone range
-                int start = max(0, light - d);
-                int end = min(l, light + d);
-                //Iterate over cone range turning on lightable flags
-                for (int k = start; k < end; k++) {
-                    lightable[k] = true;
-                }
+        //Get inputs
+        light_locations = readlineofints(n);
+        //For each light
+        for (auto light : light_locations) {
+            //Calculate cone range
+            int start = max(0, light - d);
+            int end = min(l, light + d);
+            //Iterate over cone range turning on lightable flags
+            for (int k = start; k < end; k++) {
+                lightable[k] = true;
             }
         }
 
@@ -82,51 +80,57 @@ int main() {
         }
 
         //TODO: Convert things below this line
-        //Calculate the value/length ratio, tracking item number
-        vector<vector<double>> ratio;
-        vector<vector<int>> sorted_score;
-        for (int i = 0; i < length.size(); i++) {
-            vector<double> ratio_row;
-            vector<int> sorted_score_row;
-            ratio_row.push_back(i); //Add item number
-            sorted_score_row.push_back(i); //Add item number
-            ratio_row.push_back(double(score[i]) / double(length[i])); //Add score
-            sorted_score_row.push_back(score[i]); //Add score
-            ratio.push_back(ratio_row);
-            sorted_score.push_back(sorted_score_row);
-        }
+        ////Calculate the value/length ratio, tracking item number
+        //vector<vector<double>> ratio;
+        //vector<vector<int>> sorted_score;
+        //for (int i = 0; i < length.size(); i++) {
+        //    vector<double> ratio_row;
+        //    vector<int> sorted_score_row;
+        //    ratio_row.push_back(i); //Add item number
+        //    sorted_score_row.push_back(i); //Add item number
+        //    ratio_row.push_back(double(score[i]) / double(length[i])); //Add score
+        //    sorted_score_row.push_back(score[i]); //Add score
+        //    ratio.push_back(ratio_row);
+        //    sorted_score.push_back(sorted_score_row);
+        //}
 
-        //Sort by descending order of the score and ratio
-        sort(sorted_score.begin(), sorted_score.end(), FirstColumnOnlyCmp());
-        sort(ratio.begin(), ratio.end(), FirstColumnOnlyCmpDouble());
+        ////Sort by descending order of the score and ratio
+        //sort(sorted_score.begin(), sorted_score.end(), FirstColumnOnlyCmp());
+        //sort(ratio.begin(), ratio.end(), FirstColumnOnlyCmpDouble());
 
-        int remaining_length = m; //Initialize remaining length
-        vector<int> items_added;
-        while (remaining_length > 0) {
-            int item_to_add = -1;
-            for (auto item : ratio) { //Iterate through the ratio list
-                if (length[item[0]] <= remaining_length) { //If the length of the next best item is small enough to fit, greedy solution found
-                    item_to_add = item[0]; //Mark item as one to add
-                    break; //Break out of loop
-                }
-            }
-            if (item_to_add == -1 && length[sorted_score[0][0]]<remaining_length) { //If the most valuable item is small enough and better value
-                item_to_add = sorted_score[0][0]; //Use it instead
-            }
-            if (item_to_add != -1) { //If there's still an eligible item to add
-                items_added.push_back(item_to_add); //Record item added
-                remaining_length -= length[item_to_add]; //Decrement length
-            }
-            else { //Otherwise
-                break; //Give up
-            }
-        }
+        //int remaining_length = m; //Initialize remaining length
+        //vector<int> items_added;
+        //while (remaining_length > 0) {
+        //    int item_to_add = -1;
+        //    for (auto item : ratio) { //Iterate through the ratio list
+        //        if (length[item[0]] <= remaining_length) { //If the length of the next best item is small enough to fit, greedy solution found
+        //            item_to_add = item[0]; //Mark item as one to add
+        //            break; //Break out of loop
+        //        }
+        //    }
+        //    if (item_to_add == -1 && length[sorted_score[0][0]]<remaining_length) { //If the most valuable item is small enough and better value
+        //        item_to_add = sorted_score[0][0]; //Use it instead
+        //    }
+        //    if (item_to_add != -1) { //If there's still an eligible item to add
+        //        items_added.push_back(item_to_add); //Record item added
+        //        remaining_length -= length[item_to_add]; //Decrement length
+        //    }
+        //    else { //Otherwise
+        //        break; //Give up
+        //    }
+        //}
 
         //Print output
         std::cout << "Case #" << i << ": ";
-        for (auto item : items_added) {
-            std::cout << item + 1 << " ";
+        if (possible) {
+
         }
+        else {
+            std::cout << "impossible";
+        }
+        /*for (auto item : items_added) {
+            std::cout << item + 1 << " ";
+        }*/
         std::cout << std::endl;
     }
     return 0;
