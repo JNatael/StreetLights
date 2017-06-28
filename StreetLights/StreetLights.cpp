@@ -106,67 +106,6 @@ int main() {
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //! Go through street
-        //Everything behind street_location is lit.
-        for (int street_location = 0; street_location <= l; street_location = light_locations[light_index] + d){ //Set the street location to the next dark spot)            
-
-            //If we're past the last light and there are still unlit sections at the end, mark false and break
-            if (light_locations.size() >= light_index + 1 && light_locations[light_index] + d < street_location) {
-                possible = false;
-            }
-            //If we're past the last light but this section is the end
-            else if (light_locations.size() >= light_index + 1 && street_location == l) {
-                street_location++; //Increment street location to leave loop
-            }
-            //If the next light is unable to illuminate this spot and we're not at the start mark the problem impossible and break
-            else if (light_locations[light_index + 1] - d > street_location && street_location != 0) {
-                possible = false;
-            }
-            
-            //If we know it's impossible, break
-            if (!possible) { break; }
-            
-            //Set k to the current light
-            int k = light_index;
-            //Increment k until the light would no longer illuminate the current street location
-            while (k<light_locations.size() && light_locations[k] - d <= street_location) {
-                k++;
-            }
-            
-            //Update indices
-            light_index = k-1; //Set the light to the last one that could illuminate the current street location
-            lights_on++; //Increment lights on (since we're turning on the k-1 light)
-        }
-
-
-
-
         //! Print output
         std::cout << "Case #" << i << ": ";
         if (possible) {
