@@ -91,7 +91,7 @@ int main() {
             //If this was the last light 
             if (k == light_locations.size()) {
                 //If it lights to the end, break
-                if (light_locations[light_index] + d < l) {
+                if (light_locations[light_index] + d >= l) {
                     break;
                 } //If not, mark false and break
                 else {
