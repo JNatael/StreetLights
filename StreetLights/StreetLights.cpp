@@ -65,10 +65,11 @@ int main() {
         sort(light_locations.begin(), light_locations.end());
 
 
-        //Check to see if start can be illuminated
-        if (light_locations[0] - d > 0) {
+        //Check to see if there are lights and if start can be illuminated
+        if (light_locations.size()==0 || light_locations[0] - d > 0) {
             possible = false;
         }
+
 
         //! Go through street
         //Everything behind street_location is lit.
@@ -89,7 +90,7 @@ int main() {
             lights_on++; //Increment lights on (since we're turning on the k-1 light)
 
             //If this was the last light 
-            if (k == light_locations.size()) {
+            if (k >= light_locations.size()) {
                 //If it lights to the end, break
                 if (light_locations[light_index] + d >= l) {
                     break;
@@ -98,6 +99,10 @@ int main() {
                     possible = false;
                     break;
                 }
+            }
+            //If this wasn't the last light but the last light already lights to the end
+            if (light_locations[light_index] + d>=l) {
+                break;
             }
             //If the gap between this light and the next is nonzero, mark false and break
             if (light_locations[k] - d > light_locations[light_index] + d) {
